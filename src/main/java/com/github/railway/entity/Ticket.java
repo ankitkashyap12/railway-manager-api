@@ -19,8 +19,10 @@ public class Ticket {
     private String journeyDate;
     private String bookingDate;
     private String status;
-    private  String toStation;
-    private  String fromStation;
+    private String toStation;
+    private String fromStation;
+    private Double distance;
+    private Double price;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = true)

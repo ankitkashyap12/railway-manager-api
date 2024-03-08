@@ -1,9 +1,10 @@
 package com.github.railway.controller;
 
+
 import com.github.railway.entity.Ticket;
 import com.github.railway.entity.User;
+import com.github.railway.exception.BookingException;
 import com.github.railway.model.TicketPurchaseRequest;
-import com.github.railway.model.TicketReceipt;
 import com.github.railway.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +25,7 @@ public class BookingController {
 
 
     @PostMapping ("/book")
-    public ResponseEntity<TicketReceipt> bookTicket(@RequestBody  TicketPurchaseRequest ticketPurchaseRequest){
+    public ResponseEntity<Ticket> bookTicket(@RequestBody  TicketPurchaseRequest ticketPurchaseRequest) throws BookingException {
 
         return  ResponseEntity.ok(ticketService.purchaseTicket(ticketPurchaseRequest));
     }
@@ -37,5 +38,10 @@ public class BookingController {
     @GetMapping("/viewBookingsBySection/section/{section}")
     public  ResponseEntity<List<Ticket>> viewBookingsBySection(@PathVariable String section){
         return ResponseEntity.ok(ticketService.viewBookingsBySection(section));
+    }
+
+    @DeleteMapping("/cancelBooking/{ticketId}")
+    public ResponseEntity<Boolean> cancelTicket(@PathVariable Long ticketId){
+        return  ResponseEntity.ok(ticketService.cancelTicket(ticketId));
     }
 }

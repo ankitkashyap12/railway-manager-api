@@ -27,10 +27,13 @@ public class DistanceCalculator {
     public Double getDistance(String station1, String station2) {
         log.info("calculating distance between {} and {} ", station1, station2);
         Optional<StationDetail> station1Details = stationDetailRepository.findByStationName(station1);
+        Optional<StationDetail> station2Details = stationDetailRepository.findByStationName(station2);
+
+        if(station1Details.isEmpty() || station2Details.isEmpty())
+            return null;
         Double lat1 = station1Details.map(StationDetail::getLatitude).orElse(null);
         Double long1 = station1Details.map(StationDetail::getLongitude).orElse(null);
 
-        Optional<StationDetail> station2Details = stationDetailRepository.findByStationName(station2);
         Double lat2 = station2Details.map(StationDetail::getLatitude).orElse(null);
         Double long2 = station2Details.map(StationDetail::getLongitude).orElse(null);
 
